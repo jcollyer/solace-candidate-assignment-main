@@ -1,5 +1,6 @@
 import React from "react";
 import { Advocate } from "@/types";
+import { formattedPhone} from "@/app/utils";
 
 const AdvocateTable = ({ advocates }: { advocates: Advocate[] }) => {
   return (
@@ -59,8 +60,7 @@ const AdvocateTable = ({ advocates }: { advocates: Advocate[] }) => {
                   {advocate.yearsOfExperience}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-gray-600 font-semibold">
-                  {String(advocate.phoneNumber)
-                    .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")}
+                  {formattedPhone(advocate.phoneNumber)}
                 </td>
               </tr>
             ))}

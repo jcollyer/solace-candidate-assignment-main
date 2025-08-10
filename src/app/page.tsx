@@ -2,7 +2,9 @@
 
 import { Advocate } from "@/types";
 import { useEffect, useState } from "react";
+import { Grid2x2, Table } from 'lucide-react';
 import AdvocateTable from "./components/AdvocatesTable";
+import { AdvocateCards } from "./components/AdvocatesCards";
 
 const COUNT = 8;
 
@@ -12,6 +14,7 @@ export default function Home() {
   const [term, setTerm] = useState<string>("");
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
+  const [view, setView] = useState<"cards" | "table">("table");
 
   const totalPages = Math.max(1, Math.ceil(total / COUNT));
 
@@ -59,18 +62,38 @@ export default function Home() {
             >
               Reset Search
             </button>
+            <div className="flex gap-1">
+              <button className={`${view === "table" ? "border-indigo-300" : "border-gray-300"} border-2 rounded-md p-1 hover:bg-gray-100 transition`}>
+                <Table className="text-gray-700" onClick={() => setView("table")} />
+              </button>
+              <button className={`${view === "cards" ? "border-indigo-300" : "border-gray-300"} border-2 rounded-md p-1 hover:bg-gray-100 transition`}>
+                <Grid2x2 className="text-gray-700" onClick={() => setView("cards")} />
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
       <main className="flex flex-grow">
-        {loading && (
-          <div className="flex items-center justify-center w-full h-full min-h-[400px]">
-            <h3 className="text-2xl text-gray-600 font-medium">Loading...</h3>
-          </div>
-        )}
-        {!!advocates?.length && <AdvocateTable advocates={advocates} />}
+        <div className="flex flex-col w-full">
+          {loading && (
+            <div className="flex items-center justify-center w-full h-full min-h-[400px]">
+              <h3 className="text-2xl text-gray-600 font-medium">Loading...</h3>
+            </div>
+          )}
+          {!!advocates && advocates.length > 0 && (view === "cards" ? (
+            <AdvocateCards advocates={advocates} />
+          ) : (
+            <AdvocateTable advocates={advocates} />
+          ))}
+          {advocates === undefined && !loading && (
+            <div className="flex items-center justify-center w-full h-full min-h-[400px]">
+              <h3 className="text-2xl text-gray-600 font-medium">No advocates found</h3>
+            </div>
+          )}
+        </div>
       </main>
+
       <div className="flex gap-2 sticky bottom-0 justify-center bg-white p-4 border-t border-gray-200">
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}

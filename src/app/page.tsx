@@ -36,36 +36,41 @@ export default function Home() {
 
   console.log("advocates", advocates);
   return (
-    <main style={{ margin: "24px" }}>
-      <h1>Solace Advocates</h1>
-      <br />
-      <br />
-      <div>
-        <p>Search</p>
-        <p>
-          Searching for: <span id="search-term"></span>
-        </p>
-        <input
-          value={term}
-          onChange={(e) => {
-            setTerm(e.target.value);
-            setPage(1); // reset to first page on new search
-          }}
-          placeholder="Type to search..."
-          className="px-4 py-2 rounded-xl border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-300 shadow-sm transition"
-        />
-        <button
-          onClick={() => setTerm("")}
-          className="bg-indigo-100 text-gray-600 font-medium px-4 py-2 rounded-xl shadow hover:bg-indigo-200 hover:shadow-md transition"
-        >
-          Reset Search
-        </button>
-      </div>
-      {!!loading && (<p className="text-gray-500">Loading advocates...</p>)}
-      {!!advocates?.length && <AdvocateTable advocates={advocates} />}
+    <>
+      <header className="bg-white p-6 shadow-md sticky top-0 z-10">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <h1 className="text-3xl font-bold text-gray-700 tracking-tight">
+            Solace Advocates
+          </h1>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
+            <input
+              value={term}
+              onChange={(e) => {
+                setTerm(e.target.value);
+                setPage(1); // reset to first page on new search
+              }}
+              placeholder="Type to search..."
+              className="px-4 py-2 rounded-xl border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-300 shadow-sm transition"
+            />
 
+            <button
+              onClick={() => setTerm("")}
+              className="bg-indigo-100 text-gray-600 font-medium px-4 py-2 rounded-xl shadow hover:bg-indigo-200 hover:shadow-md transition"
+            >
+              Reset Search
+            </button>
+          </div>
+        </div>
+      </header>
 
-
+      <main className="flex flex-grow">
+        {loading && (
+          <div className="flex items-center justify-center w-full h-full min-h-[400px]">
+            <h3 className="text-2xl text-gray-600 font-medium">Loading...</h3>
+          </div>
+        )}
+        {!!advocates?.length && <AdvocateTable advocates={advocates} />}
+      </main>
       <div className="flex gap-2 sticky bottom-0 justify-center bg-white p-4 border-t border-gray-200">
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -97,6 +102,6 @@ export default function Home() {
           Next
         </button>
       </div>
-    </main>
+    </>
   );
 }

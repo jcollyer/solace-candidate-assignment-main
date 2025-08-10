@@ -1,5 +1,6 @@
-import { drizzle } from "drizzle-orm/postgres-js";
+import * as schema from "@/db/schema";
 import postgres from "postgres";
+import { drizzle } from "drizzle-orm/postgres-js";
 
 const setup = () => {
   if (!process.env.DATABASE_URL) {
@@ -13,7 +14,7 @@ const setup = () => {
 
   // for query purposes
   const queryClient = postgres(process.env.DATABASE_URL);
-  const db = drizzle(queryClient);
+   const db = drizzle(queryClient, { schema });
   return db;
 };
 

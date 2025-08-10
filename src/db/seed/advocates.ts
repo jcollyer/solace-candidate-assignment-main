@@ -1,6 +1,3 @@
-import db from "..";
-import { advocates } from "../schema";
-
 const specialties = [
   "Bipolar",
   "LGBTQ",
@@ -175,4 +172,4 @@ const advocateData = [
   },
 ];
 
-export { advocateData };
+module.exports = { advocateData };

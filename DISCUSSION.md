@@ -14,4 +14,3 @@ I noticed the **Drizzle packages** were a major version behind. That did not cau
 - [ ] Optimize mobile page size and responsive design
 - [ ] Add debounce to `/api/advocates` endpoint for better performance
 
-Add sorting functionality to the advocate table, allowing users to sort by first or last name with toggleable states: ascending, descending, and none. Default to none. This should be implemented on both the frontend and backend. Let me know if you need clarification on the UI/UX flow or API contract.
